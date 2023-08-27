@@ -5,10 +5,22 @@ import { Context } from "../store/appContext";
 
 export const Single = props => {
 	const { store, actions } = useContext(Context);
+	const [character, setCharacter] = useState({})
 	const params = useParams();
+
+	function getCharacter(){
+		fetch('https://swapi.dev/api/people'+params.theid)
+		.then((response) => response.json())
+		.then((data) => setCharacter(data.result.properties) )
+	}
+
+	useEffect(()=>{
+		getCharacter()
+	},[])
+
 	return (
 		<div className="jumbotron">
-			<h1 className="display-4">This will show the demo element: {store.demo[params.theid].title}</h1>
+			<h1 className="display-4">This will show the demo element: </h1>
 
 			<hr className="my-4" />
 
